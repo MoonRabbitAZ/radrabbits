@@ -60,8 +60,8 @@ contract RadRabbits is Initializable, ERC721EnumerableUpgradeable, OwnableUpgrad
     }
 
     function setBeneficiary(address payable _beneficiary) public onlyOwner {
-        // require non set
-        require(beneficiary == address(0));
+        // require non zero
+        require(_beneficiary != address(0));
 
         beneficiary = _beneficiary;
     }
@@ -75,6 +75,10 @@ contract RadRabbits is Initializable, ERC721EnumerableUpgradeable, OwnableUpgrad
         for (uint256 i; i < _nbTokens; i++) {
             _safeMint(msg.sender, supply + i);
         }
+    }
+
+    function mintSpecific(uint256 _tokenId, address receiver) public onlyOwner {
+        _safeMint(receiver, _tokenId);
     }
 
     function flipSaleStarted() external onlyOwner {
@@ -158,5 +162,9 @@ contract RadRabbits is Initializable, ERC721EnumerableUpgradeable, OwnableUpgrad
         uint256 _balance = address(this).balance;
 
         require(payable(beneficiary).send(_balance));
+    }
+
+    function setMaxTokensPerMint(uint256 _newMaxTokensPerMint) public onlyOwner {
+        MAX_TOKENS_PER_MINT = _newMaxTokensPerMint;
     }
 }

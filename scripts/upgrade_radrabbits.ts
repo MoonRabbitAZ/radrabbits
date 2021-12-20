@@ -8,7 +8,7 @@ async function main() {
     let creator: SignerWithAddress;
     let radrabbits;
     [creator] = await ethers.getSigners();
-    const radRabbitsProxyAddr = "";
+    const radRabbitsProxyAddr = "0xb3Ba1D4E935F0d917E1eC7d19Ca657e29F4Ada5A";
 
     const RadRabbitsFactory = await ethers.getContractFactory("RadRabbits", creator);
     console.log("Preparing upgrade...");
